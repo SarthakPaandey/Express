@@ -70,6 +70,21 @@ app.delete("/courses/:id", (req, res) => {
   res.json(deletedCourse); // Respond with the deleted course
 });
 
+function middleware(req, res, next) {
+  console.log("Called middleware function");
+  next();
+}
+//logger
+app.use(middleware);
+
+// method, ip, hostname, date
+app.use((req, res, next) => {
+  console.log(
+    `${req.method} ${req.ip} ${req.hostname} ${new Date().toISOString()}`
+  );
+  next();
+});
+// Start the server
 const port = 3001;
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
